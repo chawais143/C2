@@ -5,7 +5,7 @@ class Calculator {
 		this.clear()
 	}
 
-	clear() {
+	clear() {                     
        this.currentOperand = ''
        this.previousOperand = ''
        this.operation = undefined
@@ -13,18 +13,18 @@ class Calculator {
 
 	
 
-	delete() {
-      this.currentOperand = this.currentOperand.toString().slice(0, -1)
+	delete() {                    // delete function ma loop ke index ko target kia ha tu ya uski value null return kare ga                           
+      this.currentOperand = this.currentOperand.toString().slice(0, -1)     
 	}
 
 
-	appendNumber(number) {
+	appendNumber(number) {            // agar hum decimal number ko click  kare tu uske bad koi bhi value ajay tu ya dobara use nhi hoga
 		if (number === '.' && this.currentOperand.includes('.')) return
        this.currentOperand = this.currentOperand.toString() + number.toString()
 	}
 
 
-	chooseOperation(operation){
+	chooseOperation(operation){  //   jab hum opertaion ko use kare tu wo current value ko plus karde previous value ma
 		if (this.currentOperand === '') return
 		if (this.previousOperand !== '') {
 			this.compute()
@@ -36,7 +36,7 @@ class Calculator {
 
 
 
-	compute() {
+	compute() {            // is function ma hum ne call kia ha ke agar hum koi bhi operation use kare tu break ho jay aur uper value ke sath show ho jay
       let computation
       const prev = parseFloat(this.previousOperand)
       const current = parseFloat(this.currentOperand)
@@ -64,7 +64,7 @@ class Calculator {
 	}
 
 
-	getDisplayNumber(number) {
+	getDisplayNumber(number) {   // is ma const var banay ha iske index ko first se le ke second last tak target kia ha iski value null aye gi
 		const stringNumber = number.toString()
 		const integerDigits = parseFloat(stringNumber.split('.')[0])
 		const decimalDigits = stringNumber.split('.')[1]
@@ -83,7 +83,7 @@ class Calculator {
 	}
 
 
-	updateDisplay() {
+	updateDisplay() {                                          // is function ma currentoperand ki value diplay number ke equal ha is ma 2 hi vlues aye gi true ya false
       this.currentOperandTextElement.innerText = 
       this.getDisplayNumber(this.currentOperand)
       if (this.operation != null) {
@@ -97,7 +97,7 @@ class Calculator {
 }
 
 
-const numberButtons = document.querySelectorAll('[data-number]')
+const numberButtons = document.querySelectorAll('[data-number]')       //var bana ke unko attribute dia ha jo html ma banay ha aur iski value string ma call ki ha
 const operationButtons = document.querySelectorAll('[data-operation]')
 const equalsButtons = document.querySelector('[data-equals]')
 const deleteButtons = document.querySelector('[data-delete]')
@@ -109,34 +109,34 @@ const currentOperandTextElement = document.querySelector('[data-current-operand]
 const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
 
 numberButtons.forEach(button => {
-	button.addEventListener('click', () => {
+	button.addEventListener('click', () => {   // agar hum number button pe click kare tu iska inner text ajay ga
 		calculator.appendNumber(button.innerText)
 		calculator.updateDisplay()
 	})
 })
 
 
-operationButtons.forEach(button => {
+operationButtons.forEach(button => {   //operation button pe agar hum click kare tu iska inner text ajay ga
 	button.addEventListener('click', () => {
 		calculator.chooseOperation(button.innerText)
 		calculator.updateDisplay()
 	})
 })
 
-
-equalsButtons.addEventListener('click', ()=> {
+                
+equalsButtons.addEventListener('click', ()=> {       //agar hum equal ke button pe click kare tu ya compute ki aur update display ki value ko plus kare ga
 	calculator.compute()
     calculator.updateDisplay()
 })
 
 
-allClearButtons.addEventListener('click', ()=> {
+allClearButtons.addEventListener('click', ()=> {    //agarhum clear ke button pe click kare tu iski value null aye gi
 	calculator.clear()
     calculator.updateDisplay()
 })
 
 
-deleteButtons.addEventListener('click', ()=> {
+deleteButtons.addEventListener('click', ()=> {     // agarhum delete buuton pe click kare ge tu ya operation ho ya number tu ya usa  1 1 karke delete kare ga 
 	calculator.delete()
     calculator.updateDisplay()
 })
